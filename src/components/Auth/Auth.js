@@ -6,14 +6,14 @@ class Auth extends React.Component {
   authenticateUser = (e) => {
     e.preventDefault();
     authRequests.authenticate().then(() => {
-      // do something
+      this.props.isAuthenticated();
     }).catch(err => console.error('there was an error with auth', err));
   }
 
   render() {
     return (
       <div className="Auth">
-        <button className="btn btn-danger" onClick={this.authenticateUser}>Login</button>
+        <button className="btn btn-danger mt-5 mb-5" onClick={this.authenticateUser}>Login</button>
       </div>
     );
   }
