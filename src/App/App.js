@@ -53,6 +53,17 @@ class App extends Component {
     this.setState({ authed: true });
   }
 
+  deleteOne = (listingId) => {
+    listingRequests.deleteListing(listingId)
+      .then(() => {
+        listingRequests.getRequest()
+          .then((listings) => {
+            this.setState({ listings });
+          });
+      })
+      .catch(err => console.error('error with delete single', err));
+  }
+
   render() {
     const logoutClickEvent = () => {
       authRequests.logOutUser();
@@ -73,7 +84,9 @@ class App extends Component {
       <div className="App">
         <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
         <div className="row">
-          <Listings listings={this.state.listings}/>
+          <Listings
+          listings={this.state.listings}
+          deleteSingleListing={this.deleteOne}/>
           <Building />
         </div>
         <div className="row">
