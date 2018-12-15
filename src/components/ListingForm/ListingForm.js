@@ -2,9 +2,9 @@ import React from 'react';
 import './ListingForm.scss';
 
 class ListingForm extends React.Component {
-  render () {
+  render() {
     return (
-      <div className="ListingForm">
+      <div className="ListingForm col">
         <h2>ListingForm</h2>
       </div>
     );
