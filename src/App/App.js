@@ -19,6 +19,8 @@ class App extends Component {
   state = {
     authed: false,
     listings: [],
+    isEditing: false,
+    editId: '-1',
   }
 
   componentDidMount() {
@@ -64,6 +66,8 @@ class App extends Component {
       .catch(err => console.error('error with delete single', err));
   }
 
+  passListingToEdit = listingId => this.setState({ isEditing: true, editId: listingId });
+
   formSubmitEvent = (newListing) => {
     listingRequests.postRequest(newListing)
       .then(() => {
@@ -77,15 +81,21 @@ class App extends Component {
   }
 
   render() {
+    const {
+      authed,
+      listings,
+      isEditing,
+      editId,
+    } = this.state;
     const logoutClickEvent = () => {
       authRequests.logOutUser();
       this.setState({ authed: false });
     };
 
-    if (!this.state.authed) {
+    if (!authed) {
       return (
        <div className="App">
-        <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
+        <MyNavbar isAuthed={authed} logoutClickEvent={logoutClickEvent} />
         <div className="row">
           <Auth isAuthenticated={this.isAuthenticated}/>
         </div>
@@ -94,15 +104,17 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <MyNavbar isAuthed={this.state.authed} logoutClickEvent={logoutClickEvent} />
+        <MyNavbar isAuthed={ authed } logoutClickEvent={logoutClickEvent} />
         <div className="row">
           <Listings
-          listings={this.state.listings}
-          deleteSingleListing={this.deleteOne}/>
+          listings={listings}
+          deleteSingleListing={this.deleteOne}
+          passListingToEdit={this.passListingToEdit}
+          />
           <Building />
         </div>
         <div className="row">
-         <ListingForm onSubmit={this.formSubmitEvent}/>
+         <ListingForm onSubmit={this.formSubmitEvent} isediting={ isEditing } editId={ editId } />
         </div>
       </div>
     );

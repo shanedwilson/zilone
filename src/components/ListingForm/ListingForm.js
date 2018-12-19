@@ -18,6 +18,8 @@ const defaultListing = {
 class ListingForm extends React.Component {
   static propTypes = {
     onsubmit: PropTypes.func,
+    isEditing: PropTypes.bool,
+    editId: PropTypes.string,
   }
 
   state = {
