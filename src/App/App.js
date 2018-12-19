@@ -114,7 +114,7 @@ class App extends Component {
           <Building />
         </div>
         <div className="row">
-         <ListingForm onSubmit={this.formSubmitEvent} isediting={ isEditing } editId={ editId } />
+         <ListingForm onSubmit={this.formSubmitEvent} isEditing={ isEditing } editId={ editId } />
         </div>
       </div>
     );
