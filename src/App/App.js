@@ -69,15 +69,28 @@ class App extends Component {
   passListingToEdit = listingId => this.setState({ isEditing: true, editId: listingId });
 
   formSubmitEvent = (newListing) => {
-    listingRequests.postRequest(newListing)
-      .then(() => {
-        listingRequests.getRequest()
-          .then((listings) => {
-            this.setState({ listings });
-          });
-      }).catch((err) => {
-        console.error('error with listings post', err);
-      });
+    const { isEditing, editId } = this.state;
+    if (isEditing) {
+      listingRequests.putRequest(editId, newListing)
+        .then(() => {
+          listingRequests.getRequest()
+            .then((listings) => {
+              this.setState({ listings, isEditing: false, editId: '-1' });
+            });
+        }).catch((err) => {
+          console.error('error with listings post', err);
+        });
+    } else {
+      listingRequests.postRequest(newListing)
+        .then(() => {
+          listingRequests.getRequest()
+            .then((listings) => {
+              this.setState({ listings });
+            });
+        }).catch((err) => {
+          console.error('error with listings post', err);
+        });
+    }
   }
 
   render() {

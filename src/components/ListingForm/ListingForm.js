@@ -53,7 +53,6 @@ class ListingForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { isEditing, editId } = this.props;
-    console.log(prevProps, isEditing, this.props);
     if (prevProps !== this.props && isEditing) {
       listingRequests.getSingleListing(editId)
         .then((listing) => {
@@ -67,10 +66,17 @@ class ListingForm extends React.Component {
 
   render() {
     const { newListing } = this.state;
+    const { isEditing } = this.props;
+    const title = () => {
+      if (isEditing) {
+        return <h2>Edit Listings:</h2>;
+      }
+      return <h2>Add New Listing:</h2>;
+    };
     return (
       <div className="listing-form col">
-        <h2>Add New Listing</h2>
-        <form onSubmit={this.formSubmit}>
+      {title()};
+      <form onSubmit={this.formSubmit}>
           <div className="form-group">
             <label htmlFor="address">Address:</label>
             <input
