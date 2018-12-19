@@ -178,7 +178,7 @@ class ListingForm extends React.Component {
             value={newListing.cooling}
             onChange={this.coolingChange}
             />
-          </div>          
+          </div>
           <button type="submit" className="btn btn-danger">Save Listing</button>
         </form>
       </div>
